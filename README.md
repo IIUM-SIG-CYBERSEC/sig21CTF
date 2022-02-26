@@ -1,10 +1,15 @@
 # sig21CTF
 SIG21CTF ALL QUESTION AND FLAGS
 
-```
-.
+```.
 ├── CRYPTO
-│   └── CRYPTO001.jpeg
+│   ├── CRYPTO001.jpeg
+│   ├── CRYPTO002
+│   ├── CRYPTO002_flag
+│   └── RSA0003
+│       ├── CRYPTO003_flag
+│       ├── key.pub
+│       └── message.secret
 ├── FORENSICS
 │   └── FORENSICS001.png
 ├── LINUX
@@ -23,9 +28,10 @@ SIG21CTF ALL QUESTION AND FLAGS
 │   │   └── cr4ckm3002
 │   ├── cr4ckm3001.cpp
 │   └── cr4ckm3002.cpp
+├── README.md
 └── STEG
     ├── spam.txt
     └── steg001.jpg
 
-9 directories, 14 files
+10 directories, 20 files
 ```
