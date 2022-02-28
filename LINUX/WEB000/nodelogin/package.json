@@ -1,0 +1,16 @@
+{
+  "name": "login",
+  "version": "1.0.1",
+  "description": "admin_login_panel",
+  "main": "login.js",
+  "scripts": {
+    "test": "echo \"hello\""
+  },
+  "author": "blackdracula18",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "express-session": "^1.17.2",
+    "mysql": "^2.18.1"
+  }
+}
