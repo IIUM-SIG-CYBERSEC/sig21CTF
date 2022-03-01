@@ -4,7 +4,7 @@
   "description": "admin_login_panel",
   "main": "login.js",
   "scripts": {
-    "test": "echo \"hello\""
+    "start": "node login.js"
   },
   "author": "blackdracula18",
   "license": "ISC",
