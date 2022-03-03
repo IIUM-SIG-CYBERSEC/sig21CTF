@@ -2,10 +2,17 @@ const mysql = require("mysql");
 const express = require("express");
 const session = require("express-session");
 const path = require("path");
+const os = require("os");
 const { exec } = require("child_process");
 const flag_1 = "sig21CTF{wh0_s4id_1_need_passw0rd_t0_l0g1n}";
 const port = 3000
-const connection = mysql.createConnection({
+
+os.hostname() === "arch-uefi" ? connection = mysql.createConnection({
+  host: "127.0.0.1",
+  user: "abuyusif",
+  password: "abuyusif",
+  database: "nodelogin",
+}) : connection = mysql.createConnection({
   host: "127.0.0.1",
   user: "abuyusif",
   password: "hfST9bmsQeFWkaQS",
@@ -13,7 +20,6 @@ const connection = mysql.createConnection({
 });
 
 const app = express();
-
 app.use(
   session({
     secret: "secret",
@@ -21,6 +27,7 @@ app.use(
     saveUninitialized: true,
   })
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "static")));
@@ -62,9 +69,10 @@ app.get("/home", (request, response) => {
 
 app.get("/dash", (request, response) => {
   if (request.session.loggedin) {
-    exec(`echo ${flag_1} > flag_1:${flag_1}`, () => { });
+    let alert = require('alert');
+    alert(flag_1)
+    response.sendFile(path.join(__dirname + "/dashboard.html"));
   }
-  response.sendFile(path.join(__dirname + "/dashboard.html"));
 });
 
 const sanitize = (value) => {
