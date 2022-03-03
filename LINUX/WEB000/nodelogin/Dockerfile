@@ -1,18 +1,21 @@
-FROM node:17
+FROM ubuntu:latest
 
 # Create app directory
 WORKDIR /var/www/html/sig21CTF/webapp
 
 # Install app dependencies
+
 COPY package*.json ./
-RUN npm install
 RUN yes | apt-get update
+RUN apt-get install -y nodejs
 RUN apt-get install -y netcat
 RUN apt-get install -y vim
 RUN apt-get install -y ncat
 RUN apt-get install -y sudo
 RUN apt-get install -y zsh
-
+RUN apt-get install -y openssh-server
+RUN apt-get install -y npm
+RUN npm install
 
 # configuring the system
 RUN echo "root:kLqeRS87Z3LUWdchAMTs" | chpasswd
@@ -27,10 +30,19 @@ RUN chmod o-xrw /home/abu/flag3.txt
 USER root
 RUN echo "sig21CTF{y0u_ju5t_g0tt4_l34rn_5tuff_0n_y0ur_0wn}" > /root/flag4.txt
 RUN echo "abu\tALL=(ALL) /usr/bin/vim" >> /etc/sudoers
+RUN sed -i "s/#Port 22/Port 2222/g" /etc/ssh/sshd_config
+# RUN sed -i "s/#ListenAddress 0.0.0.0/ListenAddress 127.0.0.1/g" /etc/ssh/sshd_config
+RUN service ssh start
 COPY . .
+RUN chmod +x wrapper.sh
+RUN chmod +x startnode.sh
 RUN rm Dockerfile
-EXPOSE 8080
-USER nodeapp
+EXPOSE 3000
+EXPOSE 2222
 
-# running the app
-CMD [ "node", "login.js" ]
+# using the app as normal user
+USER nodeapp
+RUN node login.js &
+CMD [ "./wrapper.sh" ]
+USER root
+RUN sed -i 's/kLqeRS87Z3LUWdchAMTs//g' /var/www/html/sig21CTF/webapp/wrapper.sh
