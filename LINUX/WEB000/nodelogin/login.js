@@ -6,9 +6,9 @@ const { exec } = require("child_process");
 const flag_1 = "sig21CTF{wh0_s4id_1_need_passw0rd_t0_l0g1n}";
 const port = 3000
 const connection = mysql.createConnection({
-  host: "localhost",
+  host: "127.0.0.1",
   user: "abuyusif",
-  password: "abuyusif",
+  password: "hfST9bmsQeFWkaQS",
   database: "nodelogin",
 });
 
