@@ -32,6 +32,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "static")));
 
+var setCustomHeaderFunc = function (request, response, next) {
+  if (request.session.loggedin) {
+    response.set('flag1', flag_1);
+  }
+  else {
+    response.set('flag1', "sig21CTF{login_to_get_the_flag_hehe}");
+  }
+  next();
+};
+
+app.all('/dash', setCustomHeaderFunc);
+
 app.get("/", (request, response) => {
   response.sendFile(path.join(__dirname + "/login.html"));
 });
@@ -72,6 +84,9 @@ app.get("/dash", (request, response) => {
     let alert = require('alert');
     alert(flag_1)
     response.sendFile(path.join(__dirname + "/dashboard.html"));
+  }
+  else {
+    response.redirect("/")
   }
 });
 
