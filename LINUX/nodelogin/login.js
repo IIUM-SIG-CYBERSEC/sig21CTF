@@ -5,7 +5,7 @@ const path = require("path");
 const os = require("os");
 const { exec } = require("child_process");
 const flag_1 = "sig21CTF{wh0_s4id_1_need_passw0rd_t0_l0g1n}";
-const port = 3000
+const port = 3001
 
 os.hostname() === "arch-uefi" ? connection = mysql.createConnection({
   host: "127.0.0.1",
@@ -53,9 +53,13 @@ app.post("/auth", (request, response) => {
   let username = request.body.username;
   let password = request.body.password;
   if (username && password) {
-    const query = `SELECT * FROM accounts WHERE username = '${username}' AND password = '${password}'`;
+	  username = username.toString().replace(";","")
+	  username = username.toString().replace("'","")
+	  password = password.toString().replace(";", "")
+	  password = password.toString().replace("'", "")
+    const query = "SELECT * FROM accounts WHERE username = "+ `"${username}"`+" AND password = " + `"${password}"`;
     connection.query(query, (error, results) => {
-      if (error) throw error;
+      if (error) {console.log(error)}
       if (results.length > 0) {
         request.session.loggedin = true;
         request.session.username = username;
