@@ -35,6 +35,7 @@ app.use(express.static(path.join(__dirname, "static")));
 var setCustomHeaderFunc = function (request, response, next) {
   if (request.session.loggedin) {
     response.set('flag1', flag_1);
+    response.set('ssh', 'sshuser:qP9jjbYeWzf7zs9t:2222');
   }
   else {
     response.set('flag1', "sig21CTF{login_to_get_the_flag_hehe}");
