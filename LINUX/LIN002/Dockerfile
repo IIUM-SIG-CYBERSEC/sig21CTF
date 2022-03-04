@@ -8,6 +8,8 @@ RUN apt-get install -y cron
 RUN apt-get install -y python
 RUN apt-get install -y socat
 RUN apt-get install -y net-tools
+RUN apt-get install -y curl
+RUN apt-get install -y wget
 
 # cron stuff
 COPY backup-cron /etc/cron.d/backup-cron
@@ -42,4 +44,4 @@ EXPOSE 1337
 
 USER linuxuser
 CMD [ "/home/linuxuser/socatrun.sh" ]
-RUN sed -i 's/VLRn8Hq97J4VzVZUZkM6//g' /home/linuxuser/socatrun.sh
+RUN sed -i 's/VLRn8Hq97J4VzVZUZkM6//g' /home/linuxuser/socatrun.sh  
