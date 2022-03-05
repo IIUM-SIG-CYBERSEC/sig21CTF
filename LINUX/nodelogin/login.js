@@ -5,19 +5,25 @@ const path = require("path");
 const os = require("os");
 const { exec } = require("child_process");
 const flag_1 = "sig21CTF{wh0_s4id_1_need_passw0rd_t0_l0g1n}";
+<<<<<<< HEAD
 const port = 3000
+=======
+const port = 3001;
+>>>>>>> c4d88225f29a5f0c1a456cb01f899a2aa325f2bc
 
-os.hostname() === "arch-uefi" ? connection = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "abuyusif",
-  password: "abuyusif",
-  database: "nodelogin",
-}) : connection = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "abuyusif",
-  password: "hfST9bmsQeFWkaQS",
-  database: "nodelogin",
-});
+os.hostname() === "arch-uefi"
+  ? (connection = mysql.createConnection({
+      host: "127.0.0.1",
+      user: "abuyusif",
+      password: "abuyusif",
+      database: "nodelogin",
+    }))
+  : (connection = mysql.createConnection({
+      host: "127.0.0.1",
+      user: "abuyusif",
+      password: "hfST9bmsQeFWkaQS",
+      database: "nodelogin",
+    }));
 
 const app = express();
 app.use(
@@ -34,16 +40,15 @@ app.use(express.static(path.join(__dirname, "static")));
 
 var setCustomHeaderFunc = function (request, response, next) {
   if (request.session.loggedin) {
-    response.set('flag1', flag_1);
-    response.set('ssh', 'sshuser:qP9jjbYeWzf7zs9t:2222');
-  }
-  else {
-    response.set('flag1', "sig21CTF{login_to_get_the_flag_hehe}");
+    response.set("flag1", flag_1);
+    response.set("ssh", "sshuser:qP9jjbYeWzf7zs9t:2222");
+  } else {
+    response.set("flag1", "sig21CTF{login_to_get_the_flag_hehe}");
   }
   next();
 };
 
-app.all('/dash', setCustomHeaderFunc);
+app.all("/dash", setCustomHeaderFunc);
 
 app.get("/", (request, response) => {
   response.sendFile(path.join(__dirname + "/login.html"));
@@ -53,13 +58,19 @@ app.post("/auth", (request, response) => {
   let username = request.body.username;
   let password = request.body.password;
   if (username && password) {
-	  username = username.toString().replace(";","")
-	  username = username.toString().replace("'","")
-	  password = password.toString().replace(";", "")
-	  password = password.toString().replace("'", "")
-    const query = "SELECT * FROM accounts WHERE username = "+ `"${username}"`+" AND password = " + `"${password}"`;
+    username = username.toString().replace(";", "");
+    username = username.toString().replace("'", "");
+    password = password.toString().replace(";", "");
+    password = password.toString().replace("'", "");
+    const query =
+      "SELECT * FROM accounts WHERE username = " +
+      `"${username}"` +
+      " AND password = " +
+      `"${password}"`;
     connection.query(query, (error, results) => {
-      if (error) {console.log(error)}
+      if (error) {
+        console.log(error);
+      }
       if (results.length > 0) {
         request.session.loggedin = true;
         request.session.username = username;
@@ -86,12 +97,11 @@ app.get("/home", (request, response) => {
 
 app.get("/dash", (request, response) => {
   if (request.session.loggedin) {
-    let alert = require('alert');
-    alert(flag_1)
+    let alert = require("alert");
+    alert(flag_1);
     response.sendFile(path.join(__dirname + "/dashboard.html"));
-  }
-  else {
-    response.redirect("/")
+  } else {
+    response.redirect("/");
   }
 });
 
@@ -103,7 +113,7 @@ const sanitize = (value) => {
     strings: "strings",
     head: "head",
     tail: "tail",
-    rm: "rm"
+    rm: "rm",
   };
   return Object.values(blocked).includes(value.split(" ")[0]);
 };
@@ -114,21 +124,21 @@ app.post("/dash", (request, response) => {
     !command
       ? response.send("Enter some command brooo!!!")
       : !sanitize(command)
-        ? exec(`/bin/zsh -c "${command}"`, (error, stdout, stderr) => {
+      ? exec(`/bin/zsh -c "${command}"`, (error, stdout, stderr) => {
           // ? exec(command, (error, stdout, stderr) => {
           if (error) {
-            response.send(`error: ${stderr}`)
-            return
+            response.send(`error: ${stderr}`);
+            return;
           }
           if (stderr) {
-            response.send(`error: ${stderr}`)
-            return
+            response.send(`error: ${stderr}`);
+            return;
           }
           // console.log(stdout)
           response.send(stdout);
           response.end();
         })
-        : response.send(
+      : response.send(
           `<b>${command.split(" ")[0]}</b> is blacklisted by the admin :(`
         );
   } else {
