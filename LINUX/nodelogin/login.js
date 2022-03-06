@@ -5,11 +5,7 @@ const path = require("path");
 const os = require("os");
 const { exec } = require("child_process");
 const flag_1 = "sig21CTF{wh0_s4id_1_need_passw0rd_t0_l0g1n}";
-<<<<<<< HEAD
-const port = 3000
-=======
-const port = 3001;
->>>>>>> c4d88225f29a5f0c1a456cb01f899a2aa325f2bc
+const port = 3000;
 
 os.hostname() === "arch-uefi"
   ? (connection = mysql.createConnection({
