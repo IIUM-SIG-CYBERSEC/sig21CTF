@@ -42,3 +42,5 @@ RUN chown linuxuser:linuxuser /usr/lib/apt/flag1.txt
 USER linuxuser
 CMD [ "/home/linuxuser/socatrun.sh" ]
 RUN sed -i 's/VLRn8Hq97J4VzVZUZkM6//g' /home/linuxuser/socatrun.sh
+USER root
+RUN cron
