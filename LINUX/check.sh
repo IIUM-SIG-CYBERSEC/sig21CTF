@@ -3,6 +3,7 @@
 for (( i = 3001, j = 0; i< 3010; i++, j++ )); do
     curl localhost:$i >/dev/null 2>&1
     if [[ $? -ne 0 ]]; then
+	echo -ne $i:
         docker run --net=host --expose=$i -d sig21ctf_nodeapp_$j:latest
     fi
 done
