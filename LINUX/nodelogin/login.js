@@ -1,4 +1,4 @@
-const port = 3003
+const port = 3000
 const mysql = require("mysql");
 const express = require("express");
 const session = require("express-session");
@@ -9,17 +9,17 @@ const flag_1 = "sig21CTF{wh0_s4id_1_need_passw0rd_t0_l0g1n}";
 
 os.hostname() === "arch-uefi"
   ? (connection = mysql.createConnection({
-      host: "127.0.0.1",
-      user: "abuyusif",
-      password: "abuyusif",
-      database: "nodelogin",
-    }))
+    host: "127.0.0.1",
+    user: "abuyusif",
+    password: "abuyusif",
+    database: "nodelogin",
+  }))
   : (connection = mysql.createConnection({
-      host: "127.0.0.1",
-      user: "abuyusif",
-      password: "hfST9bmsQeFWkaQS",
-      database: "nodelogin",
-    }));
+    host: "127.0.0.1",
+    user: "abuyusif",
+    password: "hfST9bmsQeFWkaQS",
+    database: "nodelogin",
+  }));
 
 const app = express();
 app.use(
@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, "static")));
 var setCustomHeaderFunc = function (request, response, next) {
   if (request.session.loggedin) {
     response.set("flag1", flag_1);
-    response.set("ssh", "sshuser:qP9jjbYeWzf7zs9t:2222");
+    response.set("ssh", "sshuser:qP9jjbYeWzf7zs9t:222<YOURTEAMNUMBER>");
   } else {
     response.set("flag1", "sig21CTF{login_to_get_the_flag_hehe}");
   }
@@ -54,10 +54,6 @@ app.post("/auth", (request, response) => {
   let username = request.body.username;
   let password = request.body.password;
   if (username && password) {
-    username = username.toString().replace(";", "");
-    username = username.toString().replace("'", "");
-    password = password.toString().replace(";", "");
-    password = password.toString().replace("'", "");
     const query =
       "SELECT * FROM accounts WHERE username = " +
       `"${username}"` +
@@ -65,16 +61,18 @@ app.post("/auth", (request, response) => {
       `"${password}"`;
     connection.query(query, (error, results) => {
       if (error) {
-        console.log(error);
-      }
-      if (results.length > 0) {
-        request.session.loggedin = true;
-        request.session.username = username;
-        response.redirect("/home");
-      } else {
         response.send("Incorrect Username and/or Password!");
+        response.end();
+      } else {
+        if (results.length > 0) {
+          request.session.loggedin = true;
+          request.session.username = username;
+          response.redirect("/home");
+        } else {
+          response.send("Incorrect Username and/or Password!");
+        }
+        response.end();
       }
-      response.end();
     });
   } else {
     response.send("Please enter Username and Password!");
@@ -120,7 +118,7 @@ app.post("/dash", (request, response) => {
     !command
       ? response.send("Enter some command brooo!!!")
       : !sanitize(command)
-      ? exec(`/bin/zsh -c "${command}"`, (error, stdout, stderr) => {
+        ? exec(`/bin/zsh -c "${command}"`, (error, stdout, stderr) => {
           // ? exec(command, (error, stdout, stderr) => {
           if (error) {
             response.send(`error: ${stderr}`);
@@ -134,7 +132,7 @@ app.post("/dash", (request, response) => {
           response.send(stdout);
           response.end();
         })
-      : response.send(
+        : response.send(
           `<b>${command.split(" ")[0]}</b> is blacklisted by the admin :(`
         );
   } else {

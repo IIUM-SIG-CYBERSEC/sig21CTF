@@ -37,7 +37,6 @@ USER root
 RUN echo "sig21CTF{y0u_ju5t_g0tt4_l34rn_5tuff_0n_y0ur_0wn}" > /root/flag5.txt
 RUN echo "abu\tALL=(ALL) /usr/bin/vim" >> /etc/sudoers
 RUN echo "# sig21CTF{52eaf68fadf470e9c993efb54a26ba35} flag6" >> /etc/ssh/sshd_config
-RUN sed -i 's/#Port 22/Port 2223/g' /etc/ssh/sshd_config
 RUN service ssh start
 COPY . .
 RUN chmod +x wrapper.sh

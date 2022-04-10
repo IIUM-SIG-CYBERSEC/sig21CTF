@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node login.js"
   },
-  "author": "blackdracula18",
+  "author": "abuyusif01",
   "license": "ISC",
   "dependencies": {
     "alert": "^5.0.10",
