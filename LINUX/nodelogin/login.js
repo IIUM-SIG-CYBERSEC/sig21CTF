@@ -1,4 +1,3 @@
-const port = 3000
 const mysql = require("mysql");
 const express = require("express");
 const session = require("express-session");

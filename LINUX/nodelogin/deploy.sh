@@ -20,7 +20,7 @@ for (( i = 0; i < 1; i++ )); do
     sed -i "1i const port = $new_js_port" login.js # sometimes i'm smart
     sed -i "40i RUN sed -i 's/#Port 22/Port $new_ssh_port/g' /etc/ssh/sshd_config" Dockerfile
  #   docker build /home/abuyusif/sig21CTF/LINUX/nodelogin -t "sig21ctf_nodeapp_$i" -q
-    docker build /home/blackdracula/ctf/sig21CTF/LINUX/nodelogin -t "sig21ctf_nodeapp_$i" -q
+    docker build /home/blackdracula/ctf/sig21CTF/LINUX/nodelogin -t "sig21ctf_nodeapp_$i"
     docker run --net=host --expose=300$new_port -d sig21ctf_nodeapp_$i:latest
     sed -i "1d" login.js
     sed -i "40d" Dockerfile
